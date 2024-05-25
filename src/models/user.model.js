@@ -2,6 +2,13 @@ import mongoose, { Mongoose, Schema } from 'mongoose';
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcrypt';
 
+const quoteSchema = new mongoose.Schema({
+    _id: mongoose.Schema.Types.ObjectId,
+    quote: String, author: String
+}, {
+    strict: true,
+});
+
 const userSchema = new Schema(
     {
         name: {
@@ -46,7 +53,10 @@ const userSchema = new Schema(
         savedQuotes: [{
             type: Schema.Types.ObjectId,
             ref: "Quote"
-        }]
+        }],
+        myQuotes: [
+            quoteSchema
+        ]
     },
     {
         timestamps: true,

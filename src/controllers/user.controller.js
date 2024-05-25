@@ -3,7 +3,7 @@ import { ApiError } from "../utils/ApiError.js"
 import { ApiResponse } from "../utils/ApiResponse.js";
 import { User } from "../models/user.model.js"
 import { uploadOnCloudinary } from "../utils/cloudinary.js"
-import mongoose from "mongoose";
+import mongoose, { Mongoose } from "mongoose";
 
 const generateAccessAndRefereshTokens = async (userId) => {
     try {
@@ -180,7 +180,7 @@ const removeFromSavedQuotes = asyncHandler(async (req, res) => {
         }
     )
     if (!user) {
-        throw new ApiError(400, "Quotes cannot be removed")
+        throw new ApiError(500, "Quotes cannot be removed")
     }
     return res.status(200).json(new ApiResponse(200, user, "Quotes removed from saved Quotes"));
 
@@ -201,4 +201,73 @@ const getUserById = asyncHandler(async (req, res) => {
     return res.status(200).json(new ApiResponse(200, user, "User fetched Successfully"))
 })
 
-export { registerUser, loginUser, getUserById, logoutUser, addToSavedQuotes, removeFromSavedQuotes }
+const addToMyQuotes = asyncHandler(async (req, res) => {
+    const { userId } = req.params
+    const { quote, author } = req.body
+    if (!userId) {
+        throw new ApiError(400, "Please provide the userID")
+    }
+    if (!quote) {
+        throw new ApiError(400, "Please enter some quote")
+    }
+
+    const newQuote = { _id: new mongoose.mongo.ObjectId(), quote, author }
+    const user = await User.updateOne({
+        _id: userId
+    },
+        {
+            $push: { myQuotes: { ...newQuote, _id: new mongoose.mongo.ObjectId() } }
+        })
+
+    if (!user) {
+        throw new ApiError(500, "Quote cannot be added")
+    }
+    const currentUser = await User.findOne({ _id: userId })
+
+    res.status(200).json(new ApiResponse(200, currentUser, "Quote Added Successfully"))
+})
+
+const removeFromMyQuotes = asyncHandler(async (req, res) => {
+    const { userId, quoteId } = req.params
+    if (!userId) {
+        throw new ApiError(400, "Please provide the userID")
+    }
+
+    const user = await User.updateOne({
+        _id: userId
+    },
+        {
+            $pull: { myQuotes: { _id: quoteId } }
+        })
+
+    if (!user) {
+        throw new ApiError(500, "Quote cannot be removed")
+    }
+    const currentUser = await User.findOne({ _id: userId })
+
+    res.status(200).json(new ApiResponse(200, currentUser, "Quote removed Successfully"))
+})
+
+const updateMyQuotes = asyncHandler(async (req, res) => {
+    const { quoteId, author, quote } = req.body
+    const { userId } = req.params
+    if (!quoteId || !author || !quote) {
+        throw new ApiError(400, "Bad Request")
+    }
+
+    const user = await User.updateOne(
+        { "myQuotes._id": quoteId },
+        { $set: { "myQuotes.$.quote": quote, "myQuotes.$.author": author } }
+    )
+
+    if (!user) {
+        throw new ApiError(500, "Quote cannot be updated")
+    }
+    const currentUser = await User.findOne({ _id: userId })
+
+    res.status(200).json(new ApiResponse(200, currentUser, "My Quotes Updated Successfully"))
+
+})
+
+
+export { registerUser, loginUser, getUserById, addToMyQuotes, updateMyQuotes, removeFromMyQuotes, logoutUser, addToSavedQuotes, removeFromSavedQuotes }
