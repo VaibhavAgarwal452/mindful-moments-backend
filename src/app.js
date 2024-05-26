@@ -17,11 +17,12 @@ app.use(cookieParser())
 // routes import 
 import userRouter from "./routes/user.routes.js"
 import QuotesRouter from "./routes/quote.routes.js"
-
+import CollectionRouter from "./routes/collection.routes.js"
 
 //routes declaration
 app.use("/api/v1/users", userRouter)
 app.use("/api/v1/quotes", QuotesRouter)
+app.use("/api/v1/collections", CollectionRouter)
 
 
 
