@@ -29,6 +29,11 @@ const createCollection = asyncHandler(async (req, res) => {
 const updateCollectionName = asyncHandler(async (req, res) => {
     const { collectionId } = req.params
     const { newCollectionName } = req.body
+    const currentCollection = await Collection.findOne({ _id: collectionId });
+
+    if (!currentCollection) {
+        throw new ApiError(400, "There is no collection with this id")
+    }
     const newCollection = await Collection.updateOne({
         _id: collectionId,
     }, {
@@ -39,12 +44,8 @@ const updateCollectionName = asyncHandler(async (req, res) => {
         new: true
     })
 
-    if (!newCollection) {
-        throw new ApiError(500, "Collection Name cannot be updated")
-    }
-    const collection = await Collection.findOne({ _id: collectionId })
-
-    return res.status(200).json(new ApiResponse(200, collection, "Collection Name updated Successfully"))
+    const collections = await Collection.find({ owner: new mongoose.Types.ObjectId(currentCollection.owner) })
+    return res.status(200).json(new ApiResponse(200, collections, "Collection Name updated Successfully"))
 })
 
 const deleteCollection = asyncHandler(async (req, res) => {
