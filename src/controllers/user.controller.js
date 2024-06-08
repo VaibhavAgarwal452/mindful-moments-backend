@@ -60,7 +60,7 @@ const registerUser = asyncHandler(async (req, res) => {
 
 const updateUser = asyncHandler(async (req, res) => {
     const { user } = req.body
-    const currentUser = await User.findByIdAndUpdate(user?._id, user, { new: true })
+    const currentUser = await User.findByIdAndUpdate(user?._id, user, { new: true }).select("-password")
     if (!currentUser) {
         throw new ApiError(500, "User cannot be updated")
     }
@@ -202,7 +202,7 @@ const getUserById = asyncHandler(async (req, res) => {
     if (!userId) {
         throw new ApiError(400, "Please provide the userId")
     }
-    const user = await User.findById(userId)
+    const user = await User.findById(userId).select("-password")
     if (!user) {
         throw new ApiError(500, "User cannot be fetched")
     }
