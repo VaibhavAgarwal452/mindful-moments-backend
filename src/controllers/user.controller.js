@@ -268,5 +268,17 @@ const updateMyQuotes = asyncHandler(async (req, res) => {
 
 })
 
+const checkIfUserEmailExists = asyncHandler(async (req, res) => {
+    const { email } = req.body
 
-export { registerUser, loginUser, getUserById, addToMyQuotes, updateMyQuotes, removeFromMyQuotes, logoutUser, addToSavedQuotes, removeFromSavedQuotes }
+    const currentEmail = await User.findOne({ email: email })
+    console.log("currentEmail", currentEmail)
+    if (currentEmail) {
+        throw new ApiError(500, "User Already Exists")
+    }
+
+    return res.status(200).json(new ApiResponse(200, false, "User Does not exist"))
+})
+
+
+export { registerUser, loginUser, getUserById, addToMyQuotes, updateMyQuotes, removeFromMyQuotes, logoutUser, addToSavedQuotes, removeFromSavedQuotes, checkIfUserEmailExists }
