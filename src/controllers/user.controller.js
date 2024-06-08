@@ -58,6 +58,16 @@ const registerUser = asyncHandler(async (req, res) => {
     )
 })
 
+const updateUser = asyncHandler(async (req, res) => {
+    const { user } = req.body
+    const currentUser = await User.findByIdAndUpdate(user?._id, user, { new: true })
+    if (!currentUser) {
+        throw new ApiError(500, "User cannot be updated")
+    }
+    console.log(currentUser, "currentUSer", user)
+    return res.status(200).json(new ApiResponse(200, currentUser, "User updated Successfully"))
+})
+
 const loginUser = asyncHandler(async (req, res) => {
     const { name, email, password } = req.body
 
@@ -280,4 +290,4 @@ const checkIfUserEmailExists = asyncHandler(async (req, res) => {
 })
 
 
-export { registerUser, loginUser, getUserById, addToMyQuotes, updateMyQuotes, removeFromMyQuotes, logoutUser, addToSavedQuotes, removeFromSavedQuotes, checkIfUserEmailExists }
+export { registerUser, loginUser, getUserById, addToMyQuotes, updateMyQuotes, removeFromMyQuotes, logoutUser, addToSavedQuotes, removeFromSavedQuotes, checkIfUserEmailExists, updateUser }
