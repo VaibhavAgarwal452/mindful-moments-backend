@@ -14,7 +14,6 @@ const uploadOnCloudinary = async (localFilePath) => {
         if (!localFilePath) return null
         //upload the file on cloudinary
 
-        console.log("response", process.env.CLOUDINARY_API_KEY)
         const response = await cloudinary.uploader.upload(localFilePath)
 
         // file has been uploaded successfull

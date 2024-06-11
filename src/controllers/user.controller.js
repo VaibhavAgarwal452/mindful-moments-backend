@@ -64,7 +64,6 @@ const updateUser = asyncHandler(async (req, res) => {
     if (!currentUser) {
         throw new ApiError(500, "User cannot be updated")
     }
-    console.log(currentUser, "currentUSer", user)
     return res.status(200).json(new ApiResponse(200, currentUser, "User updated Successfully"))
 })
 
