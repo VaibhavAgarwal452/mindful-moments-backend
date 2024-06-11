@@ -4,7 +4,7 @@ export const CATEGORIES = {
     faith: ["faith", "life", "inspirational"],
     positive: ["hope", "truth", "success", "knowledge"],
     stress: ["purpose", "hope", "self-help"],
-    goals: ["life", "education", "work"],
+    achievingGoals: ["life", "education", "work"],
     selfEsteem: ["time", "purpose", "money", "intelligence"],
     relationships: ["love", "hope", "humor"],
     family: ["family", "soul", "wisdom"],
