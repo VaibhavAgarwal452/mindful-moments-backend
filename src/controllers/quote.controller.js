@@ -2,7 +2,7 @@ import { asyncHandler } from "../utils/asyncHandler.js"
 import { ApiError } from "../utils/ApiError.js"
 import { ApiResponse } from "../utils/ApiResponse.js";
 import { Quote } from "../models/quote.model.js"
-import { getQuotesandSort } from "../utils/sortQuotesCategory.js";
+import { getQuotesandSort, getQuotesByCategories } from "../utils/sortQuotesCategory.js";
 
 const getQuotes = asyncHandler(async (req, res) => {
     const { page = 1, limit = 10, quoteCategory = [] } = req.body;
@@ -16,7 +16,6 @@ const getQuotes = asyncHandler(async (req, res) => {
         { $skip: (page - 1) * limit },
         // { $limit: parseInst(limit) }
     ]);
-
     res.json({
         quotes,
         page: parseInt(page),
@@ -24,6 +23,23 @@ const getQuotes = asyncHandler(async (req, res) => {
         totalPages
     });
 
+})
+
+const getQuotesByCategory = asyncHandler(async (req, res) => {
+    const { limit = 10, quoteCategory = "" } = req.body;
+    const quoteCategories = getQuotesByCategories(quoteCategory)
+    console.log(quoteCategories)
+    const totalQuotes = await Quote.countDocuments({ category: { $in: quoteCategories } });
+    console.log(totalQuotes, "totalQuotes")
+    const quotes = await Quote.aggregate([
+        { $match: { category: { $in: quoteCategories } } },
+        { $sample: { size: parseInt(limit) } },
+    ]);
+    res.json({
+        quotes,
+        limit: parseInt(limit),
+        totalQuotes
+    });
 })
 
 
@@ -41,4 +57,4 @@ const getQuotesById = asyncHandler(async (req, res) => {
     return res.status(200).json(new ApiResponse(200, quotes, "Quotes Fetched Successfully"))
 })
 
-export { getQuotes, getQuotesById }
+export { getQuotes, getQuotesById, getQuotesByCategory }
