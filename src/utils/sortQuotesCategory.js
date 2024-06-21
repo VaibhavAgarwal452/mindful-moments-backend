@@ -156,6 +156,96 @@ export const getQuotesByCategories = (quoteCategory) => {
         case "self":
             arr = arr.concat(["self"])
             break
+        case "calm":
+            arr = arr.concat(["peace", "forgiveness"])
+            break
+        case "enjoy":
+            arr = arr.concat(["happiness", "joy", "music"])
+            break
+        case "hope":
+            arr = arr.concat(["hope", "desire"])
+            break
+        case "sleep":
+            arr = arr.concat(["dreams", "dream"])
+            break
+        case "anxiety":
+            arr = arr.concat(["self-esteem"])
+            break
+        case "patience":
+            arr = arr.concat(["positive-thinking"])
+            break
+        case "stress":
+            arr = arr.concat(["depression"])
+            break
+        case "smile":
+            arr = arr.concat(["smile"])
+            break
+        case "success":
+            arr = arr.concat(["success", "success-quotes"])
+            break
+        case "money":
+            arr = arr.concat(["money"])
+            break
+        case "passion":
+            arr = arr.concat(["passion"])
+            break
+        case "business":
+            arr = arr.concat(["business"])
+            break
+        case "leadership":
+            arr = arr.concat(["leadership"])
+            break
+        case "work":
+            arr = arr.concat(["work"])
+            break
+        case "hustle":
+            arr = arr.concat(["goals"])
+            break
+        case "selfDiscipline":
+            arr = arr.concat(["self-improvement"])
+            break
+        case "perseverance":
+            arr = arr.concat(["perseverance"])
+            break
+        case "focus":
+            arr = arr.concat(["focus"])
+            break
+        case "kindness":
+            arr = arr.concat(["kindness"])
+            break
+        case "funny":
+            arr = arr.concat(["funny"])
+            break
+        case "future":
+            arr = arr.concat(["future"])
+            break
+        case "beauty":
+            arr = arr.concat(["beauty"])
+            break
+        case "words":
+            arr = arr.concat(["encouragement"])
+            break
+        case "sayings":
+            arr = arr.concat(["life-quotes-and-sayings", "wise-sayings"])
+            break
+        case "art":
+            arr = arr.concat(["art"])
+            break
+        case "forgiveness":
+            arr = arr.concat(["forgiveness"])
+            break
+        case "trust":
+            arr = arr.concat(["trust"])
+            break
+        case "lies":
+            arr = arr.concat(["lies"])
+            break
+        case "marriage":
+            arr = arr.concat(["marriage"])
+            break
+        case "religion":
+            arr = arr.concat(["religion"])
+            break
         default:
             arr = arr.concat(["life"])
             break;
