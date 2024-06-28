@@ -22,15 +22,12 @@ const getQuotes = asyncHandler(async (req, res) => {
         limit: parseInt(limit),
         totalPages
     });
-
 })
 
 const getQuotesByCategory = asyncHandler(async (req, res) => {
     const { limit = 10, quoteCategory = "" } = req.body;
     const quoteCategories = getQuotesByCategories(quoteCategory)
-    console.log(quoteCategories)
     const totalQuotes = await Quote.countDocuments({ category: { $in: quoteCategories } });
-    console.log(totalQuotes, "totalQuotes")
     const quotes = await Quote.aggregate([
         { $match: { category: { $in: quoteCategories } } },
         { $sample: { size: parseInt(limit) } },
