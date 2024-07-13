@@ -1,7 +1,5 @@
 import { Router } from "express";
-import { upload } from "../middlewares/multer.middleware.js"
-import { verifyJWT } from "../middlewares/auth.middleware.js";
-import { registerUser, loginUser, logoutUser, updateUser, getUserById, addToSavedQuotes, removeFromSavedQuotes, addToMyQuotes, removeFromMyQuotes, updateMyQuotes, checkIfUserEmailExists } from "../controllers/user.controller.js";
+import { registerUser, loginUser, sendNotification, logoutUser, updateUser, getUserById, addToSavedQuotes, removeFromSavedQuotes, addToMyQuotes, removeFromMyQuotes, updateMyQuotes, checkIfUserEmailExists } from "../controllers/user.controller.js";
 
 const router = Router()
 
@@ -15,6 +13,9 @@ router.route("/:userId/removeQuote/:quoteId").patch(removeFromSavedQuotes)
 router.route("/:userId/addToMyQuotes").post(addToMyQuotes)
 router.route("/:userId/removeFromMyQuotes/:quoteId").patch(removeFromMyQuotes)
 router.route("/:userId/updateMyQuotes").post(updateMyQuotes)
+// router.route("/saveToken").post(saveTokenToFirebase)
+router.route("/sendNotification").post(sendNotification)
+
 
 // router.route("/logout").post(verifyJWT, logoutUser)
 

@@ -53,6 +53,9 @@ const userSchema = new Schema(
             type: Schema.Types.ObjectId,
             ref: "Quote"
         }],
+        expoPushToken: {
+            type: String
+        },
         myQuotes: [
             quoteSchema
         ]
