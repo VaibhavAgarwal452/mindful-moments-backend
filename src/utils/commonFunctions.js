@@ -5,9 +5,9 @@ const expo = new Expo()
 
 export const sendNotificationToAllUsers = async (quote) => {
     const users = await User.find({})
-    users.forEach((user) => {
+    users.forEach(async (user) => {
         if (Expo.isExpoPushToken(user.expoPushToken)) {
-            expo.sendPushNotificationsAsync([
+            let reciets = await expo.sendPushNotificationsAsync([
                 {
                     to: user.expoPushToken,
                     title: "Mindful-moments",
