@@ -4,6 +4,7 @@ import { ApiResponse } from "../utils/ApiResponse.js";
 import { User } from "../models/user.model.js"
 import mongoose from "mongoose";
 import { sendNotificationToAllUsers } from "../utils/commonFunctions.js";
+import { Quote } from "../models/quote.model.js";
 
 
 const generateAccessAndRefereshTokens = async (userId) => {
@@ -293,4 +294,10 @@ const sendNotification = asyncHandler(async (req, res) => {
     return res.status(200).json(new ApiResponse(200, true, "Notification sent successfully"))
 })
 
-export { registerUser, loginUser, getUserById, addToMyQuotes, updateMyQuotes, removeFromMyQuotes, logoutUser, addToSavedQuotes, removeFromSavedQuotes, checkIfUserEmailExists, updateUser, sendNotification }
+const sendNotificationFromDatabase = asyncHandler(async (req, res) => {
+    const currentQuote = await Quote.aggregate([{ $sample: { size: 1 } }])
+    console.log(currentQuote, "currentQuote")
+    sendNotificationToAllUsers(currentQuote[0].quote)
+    return res.status(200).json(new ApiResponse(200, true, "Notification sent successfully through database"))
+})
+export { registerUser, loginUser, getUserById, addToMyQuotes, updateMyQuotes, removeFromMyQuotes, logoutUser, addToSavedQuotes, removeFromSavedQuotes, checkIfUserEmailExists, updateUser, sendNotification, sendNotificationFromDatabase }

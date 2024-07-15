@@ -12,7 +12,7 @@ dotenv.config({
 connectDB()
     .then(() => {
         app.listen(process.env.PORT || 8000, () => {
-            cronjobs()
+            // cronjobs()
             console.log(`⚙️ Server is running at port : ${process.env.PORT}`);
         })
     })

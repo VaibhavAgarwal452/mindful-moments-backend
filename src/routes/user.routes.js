@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { registerUser, loginUser, sendNotification, logoutUser, updateUser, getUserById, addToSavedQuotes, removeFromSavedQuotes, addToMyQuotes, removeFromMyQuotes, updateMyQuotes, checkIfUserEmailExists } from "../controllers/user.controller.js";
+import { registerUser, loginUser, sendNotification, logoutUser, updateUser, getUserById, addToSavedQuotes, removeFromSavedQuotes, addToMyQuotes, removeFromMyQuotes, updateMyQuotes, checkIfUserEmailExists, sendNotificationFromDatabase } from "../controllers/user.controller.js";
 
 const router = Router()
 
@@ -15,6 +15,7 @@ router.route("/:userId/removeFromMyQuotes/:quoteId").patch(removeFromMyQuotes)
 router.route("/:userId/updateMyQuotes").post(updateMyQuotes)
 // router.route("/saveToken").post(saveTokenToFirebase)
 router.route("/sendNotification").post(sendNotification)
+router.route("/sendNotificationFromDatabase").get(sendNotificationFromDatabase)
 
 
 // router.route("/logout").post(verifyJWT, logoutUser)
