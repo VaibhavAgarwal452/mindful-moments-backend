@@ -258,7 +258,7 @@ const removeFromMyQuotes = asyncHandler(async (req, res) => {
 const updateMyQuotes = asyncHandler(async (req, res) => {
     const { quoteId, author, quote } = req.body
     const { userId } = req.params
-    if (!quoteId || !author || !quote) {
+    if (!quoteId || !quote) {
         throw new ApiError(400, "Bad Request")
     }
 
