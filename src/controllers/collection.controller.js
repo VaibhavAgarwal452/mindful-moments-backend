@@ -2,7 +2,7 @@ import { asyncHandler } from "../utils/asyncHandler.js"
 import { ApiError } from "../utils/ApiError.js"
 import { ApiResponse } from "../utils/ApiResponse.js";
 import { Collection } from "../models/collection.model.js"
-import mongoose, { Mongoose } from "mongoose";
+import mongoose from "mongoose";
 
 const createCollection = asyncHandler(async (req, res) => {
     const { userId, collectionName } = req.body
