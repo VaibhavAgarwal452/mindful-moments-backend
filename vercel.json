@@ -14,7 +14,7 @@
     ],
     "crons": [
     {
-      "path": "https://mindful-moments-backend.vercel.app/api/v1/users/sendNotificationFromDatabase",
+      "path": "/api/v1/users/sendNotificationFromDatabase",
       "schedule": "0 12 * * *"
     }
   ]
